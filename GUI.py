@@ -17,29 +17,62 @@ def CloseWindow(root):
     root.destroy()
 
 def __init__window():
-   
-    def LoginFailed():
-        
-        RootLoginFailed = Toplevel(Client_windows)
-        RootLoginFailed.title(10*' '+"Lỗi đăng nhập")
-        PlaceWindow(RootLoginFailed, 300, 180)
-
-        FailLabel = Label(RootLoginFailed, text = "Tài khoản hoặc mật khẩu của bạn không chính xác!\n Vui lòng nhập lại")
-        FailLabel.place(x=10, y = 40)
-        OkButton = Button(RootLoginFailed, text = "OK",command = lambda: CloseWindow(RootLoginFailed))
-        OkButton.place(x = 85, y = 110, width = 130)
-
     def Login(event):
-        print("Login")
+        def LoginCheck():
+            #check
+            LoginFail()
 
-        #check
-        LoginFailed()
+        def LoginFail():
+            RootLoginFail = Toplevel(Client_windows)
+            RootLoginFail.grab_set()
+
+            RootLoginFail.title(10*' '+"Lỗi đăng nhập")
+            PlaceWindow(RootLoginFail, 300, 180)
+
+            FailLabel = Label(RootLoginFail, text = "Tài khoản hoặc mật khẩu của bạn không chính xác!\n Vui lòng nhập lại")
+            FailLabel.place(x=10, y = 40)
+            OkButton = Button(RootLoginFail, text = "OK",command = lambda: CloseWindow(RootLoginFail))
+            OkButton.place(x = 85, y = 110, width = 130)
+
+        def LoginSuccessful():
+            pass
+        
+        LoginCheck()
 
     def Register(event):
-        print("Register")
+        def checkRegistry():
+            #check
+            #RegisterSuccessful()
+            RegisterFail()
+
+        def RegisterSuccessful():
+            RootRS = Toplevel(RootRegister)
+            RootRS.grab_set()
+            RootRS.title(10*' '+"Thông báo")
+            PlaceWindow(RootRS, 300, 150)
+
+            SuccessfulLabel = Label(RootRS, text = "Đăng kí thành công!")
+            SuccessfulLabel.place(x=100, y = 30)
+            OkButton = Button(RootRS, text = "OK",command = lambda: [CloseWindow(RootRS),CloseWindow(RootRegister)])
+            OkButton.place(x = 85, y = 80, width = 130)
+
+        def RegisterFail():
+            RootRF = Toplevel(RootRegister)
+            RootRF.grab_set()
+            RootRF.title(10*' '+"Thông báo")
+            PlaceWindow(RootRF, 300, 150)
+
+            SuccessfulLabel = Label(RootRF, text = "Tài khoản của bạn đã tồn tại!\n Vui lòng đăng ký lại")
+            SuccessfulLabel.place(x=80, y = 30)
+            OkButton = Button(RootRF, text = "OK",command = lambda: CloseWindow(RootRF))
+            OkButton.place(x = 85, y = 80, width = 130)
+
+        
         RootRegister = Toplevel(Client_windows)
-        RootRegister.title(20*' '+"Đăng ký tài khoản")
-        PlaceWindow(RootRegister, 400, 200)
+        RootRegister.grab_set()
+
+        RootRegister.title(30*' '+"Đăng ký tài khoản")
+        PlaceWindow(RootRegister, 400, 150)
 
         usernameLabel = Label(RootRegister, text = "Username: ")
         usernameLabel.place(x = 30, y = 10)
@@ -51,10 +84,9 @@ def __init__window():
         passwordEntry = Entry(RootRegister)
         passwordEntry.place(x= 130, y = 50, width = 200)
 
-        passwordLabel = Label(RootRegister, text = "Confirm\nPassword: ")
-        passwordLabel.place(x = 30, y = 90)
-        passwordEntry = Entry(RootRegister)
-        passwordEntry.place(x= 130, y = 90, width = 200)
+        #checkButton
+        OkButton = Button(RootRegister, text = "OK",command = checkRegistry)
+        OkButton.place(x = 140, y = 95, width = 130)
 
     #init window
     Client_windows.title(80*" "+TITLE)
