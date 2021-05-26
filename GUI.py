@@ -18,7 +18,6 @@ def CloseWindow(root):
 
 def Function():
     def Logout():
-        print("Logout")
         RootFunction.destroy()
         main()
 
@@ -30,6 +29,9 @@ def Function():
             def Back():
                 CloseWindow(RootRead)
                 FunctionChoosen.set("Chọn chức năng") 
+            
+            def OpenBook():
+                print("Read")
 
             RootRead = Toplevel(RootFunction)
             RootRead.grab_set()
@@ -47,7 +49,7 @@ def Function():
             BookIDInput.place(x = 20, y = 70, width = 800, height = 20)
 
             #Input ID Button
-            InputIDButton = Button(RootRead, text = "Xem sách")
+            InputIDButton = Button(RootRead, text = "Xem sách", command = OpenBook)
             InputIDButton.place(x= 830, y = 70, width = 200)
         
             #BookContent
@@ -60,8 +62,46 @@ def Function():
 
 
         def DownloadBook():
-            print("Download book")
-        
+            def Back():
+                CloseWindow(RootDownload)
+                FunctionChoosen.set("Chọn chức năng") 
+            
+            def Download():
+                DownloadProgress.configure(state = 'normal')
+                DownloadProgress.delete("1.0", "end")
+                
+                DownloadProgress.tag_configure("center", justify='center')
+                DownloadProgress.insert(1.0, "Đang tải ... %")                #insert % here
+                DownloadProgress.tag_add("center", "1.0", "end")
+                
+                DownloadProgress.configure(state = 'disable')
+
+
+            RootDownload = Toplevel(RootFunction)
+            RootDownload.grab_set()
+            RootDownload.title(80*' '+"Tải sách")
+            PlaceWindow(RootDownload, 600, 300)
+            RootDownload.resizable(0, 0)
+            
+            #BackToMenu
+            BackButton = Button(RootDownload, text = "Trở lại", command = Back)
+            BackButton.place(x= 20, y = 20, width = 100)
+
+            #Input BookID
+            BookIDInput = Text(RootDownload)
+            BookIDInput.insert('end',"Nhập ID sách....")
+            BookIDInput.place(x = 20, y = 70, width = 400, height = 20)
+
+            #Input ID Button
+            InputIDButton = Button(RootDownload, text = "Tải sách", command = Download)
+            InputIDButton.place(x= 430, y = 70, width = 150)
+
+            #DownloadProgress
+            DownloadProgress = Text(RootDownload)
+            DownloadProgress.configure(state = 'disable')
+            DownloadProgress.place(x = 100, y = 150, width = 400, height  = 20)
+
+
         s= FunctionChoosen.get()
         if  s == " Đọc sách": ReadBook()
         if  s == " Tải sách": DownloadBook()
