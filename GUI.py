@@ -75,7 +75,22 @@ def Function():
                 DownloadProgress.tag_add("center", "1.0", "end")
                 
                 DownloadProgress.configure(state = 'disable')
+            
+            def SelectType(event):
+                def IsTxt():
+                    print(".txt")
+                def IsDoc():
+                    print(".doc")
+                def IsDocx():
+                    print(".docx")
+                def IsPdf():
+                    print(".pdf")
 
+                s= TypeChoosen.get()
+                if  s == " .txt": IsTxt()
+                if  s == " .doc": IsDoc()
+                if  s == " .docx": IsDocx()
+                if  s == " .pdf": IsPdf()
 
             RootDownload = Toplevel(RootFunction)
             RootDownload.grab_set()
@@ -92,14 +107,21 @@ def Function():
             BookIDInput.insert('end',"Nhập ID sách....")
             BookIDInput.place(x = 20, y = 70, width = 400, height = 20)
 
+            #Type 
+            TypeChoosen = ttk.Combobox(RootDownload,state="readonly")
+            TypeChoosen.set("Chọn định dạng") 
+            TypeChoosen['values'] = (' .txt',' .doc',' .docx',' .pdf')
+            TypeChoosen.place(x = 430, y = 70, width = 150)
+            TypeChoosen.bind('<<ComboboxSelected>>', SelectType)
+
             #Input ID Button
             InputIDButton = Button(RootDownload, text = "Tải sách", command = Download)
-            InputIDButton.place(x= 430, y = 70, width = 150)
+            InputIDButton.place(x= 205, y = 120, width = 170)
 
             #DownloadProgress
             DownloadProgress = Text(RootDownload)
             DownloadProgress.configure(state = 'disable')
-            DownloadProgress.place(x = 100, y = 150, width = 400, height  = 20)
+            DownloadProgress.place(x = 100, y = 200, width = 400, height  = 20)
 
 
         s= FunctionChoosen.get()
@@ -295,4 +317,45 @@ def main():
     __init__window(Client_windows)
     Client_windows.mainloop()
 
-main()
+def IPConnect():
+    def ConnectFail():
+        RootCF = Toplevel(ConnectIP)
+        RootCF.grab_set()
+        RootCF.title(10*' '+"Thông báo")
+        PlaceWindow(RootCF, 300, 150)
+
+        SuccessfulLabel = Label(RootCF, text = "IP không tồn tại!")
+        SuccessfulLabel.place(x=100, y = 30)
+        OkButton = Button(RootCF, text = "OK",command = lambda: CloseWindow(RootCF))
+        OkButton.place(x = 85, y = 80, width = 130)
+
+    def ConnectSuccessful():
+        CloseWindow(ConnectIP)
+        main()
+    def Connect():
+        print("Connect")
+
+        #check
+        #ConnectFail()
+        ConnectSuccessful()
+    
+    ConnectIP = Tk()
+    ConnectIP.title(50*" "+"Connect")
+    PlaceWindow(ConnectIP, 400, 200)
+    ConnectIP.resizable(0, 0)
+    
+    #IPInput
+    IPInput = Text(ConnectIP)
+    IPInput.insert("end","Nhập ip server ...")
+    IPInput.place (x = 20, y = 50, width = 360, height = 20)
+
+    #ConnectButton 
+    ConnectButton = Button(ConnectIP, text = "Kết nối", command = Connect)
+    ConnectButton.place(x = 150, y = 100, width = 100)
+
+    ConnectIP.mainloop()
+
+
+
+IPConnect()
+
